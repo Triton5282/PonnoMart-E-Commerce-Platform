@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="headsection">
+    <div class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo1.jpg' %}" alt="ponnomart" title="PonnoMart Store">
+        </a>
+    </div>
+    <form action="{% url 'search' %}" method="get" class="search-box">
+        <input class="search-input" type="search" name="query" placeholder="Search for products">
+        <select class="search-category" name="category">
+            <option value="">SELECT CATEGORY</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="books">Books</option>
+            <option value="grocery">Grocery</option>
+            <option value="stationary">Stationary</option>
+        </select>
+        <button type="submit" class="search-btn">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+</div>

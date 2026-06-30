@@ -1,0 +1,60 @@
+{% load static %}
+<!-- Compare Sidebar -->
+<div id="compareSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h2>Compare Products</h2>
+        <span class="close-btn" onclick="toggleCompare()">&times;</span>
+    </div>
+    <div class="compare-content"><p>No products selected for comparison</p></div>
+</div>
+
+<!-- Account Sidebar -->
+<div id="accountSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h2>My Account</h2>
+        <span class="close-btn" onclick="toggleAccount()">&times;</span>
+    </div>
+    <div class="cart-content">
+        <ul class="account-menu">
+            <li><button type="button">Account Settings</button></li>
+            <li><button type="button">Order History</button></li>
+            <li><button type="button">Cancel Order</button></li>
+            <li><button type="button">Track Order</button></li>
+            <li><button type="button" onclick="logout()">🚪 Logout</button></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Auth Sidebar -->
+<div id="authSidebar" class="auth-sidebar">
+    <div class="auth-header">
+        <img src="{% static 'images/logo1.jpg' %}" alt="PonnoMart Logo" class="auth-logo">
+        <span class="close-btn" onclick="closeSidebar()">&times;</span>
+    </div>
+    <div class="auth-fun">
+        <div class="auth-emoji">🛒😎</div>
+        <p class="auth-welcome">Welcome back, Shopping Ninja!</p>
+        <p class="auth-subtext">Login to unlock deals🤪</p>
+    </div>
+    <div class="auth-content">
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+            <div class="input-group"><i class="fa fa-envelope"></i><input type="email" placeholder="Email" required></div>
+            <div class="input-group"><i class="fa fa-lock"></i><input type="password" placeholder="Password" required></div>
+            <button type="submit" class="auth-btn">🚀 Login</button>
+            <p class="auth-text">Don’t have an account? <a href="#" onclick="switchForm('signup')">Sign Up 🎉</a></p>
+        </form>
+        <!-- Signup Form -->
+        <form id="signupForm" class="auth-form hidden">
+            <div class="input-group"><i class="fa fa-user"></i><input type="text" placeholder="Full Name" required></div>
+            <div class="input-group"><i class="fa fa-envelope"></i><input type="email" placeholder="Email" required></div>
+            <div class="input-group"><i class="fa fa-phone"></i><input type="tel" placeholder="Phone Number" required></div>
+            <div class="input-group"><i class="fa fa-home"></i><input type="text" placeholder="Address" required></div>
+            <div class="input-group"><i class="fa fa-lock"></i><input type="password" placeholder="Password" required></div>
+            <div class="input-group"><i class="fa fa-lock"></i><input type="password" placeholder="Confirm Password" required></div>
+            <button type="submit" class="auth-btn">🎉 Sign Up</button>
+            <p class="auth-text">Already have an account? <a href="#" onclick="switchForm('login')">Login 😁</a></p>
+        </form>
+    </div>
+</div>
+

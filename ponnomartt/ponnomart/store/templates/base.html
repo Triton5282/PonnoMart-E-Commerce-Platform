@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="title" content="PonnoMart | Ethically made handcrafted products and every possible items">
+    <meta name="description" content="PonnoMart -- Number one and highest selling E-Commerce">
+    <title>{% block title %}PonnoMart{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/iconTest.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<!-- Header Section -->
+<div class="headsection">
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo1.jpg' %}" alt="ponnomart" title="PonnoMart Store"></a>
+    </div>
+
+    <form action="{% url 'search' %}" class="search-box">
+        <input class="search-input" type="search" placeholder="Search for products" name="q">
+        <select class="search-category" name="category">
+            <option value="">SELECT CATEGORY</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="books">Books</option>
+            <option value="grocery">Grocery</option>
+        </select>
+        <button type="submit" class="search-btn">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+
+    <div class="notifications box" title="Notifications">
+        <span><i class="fa-solid fa-bell fa-xl"></i></span>
+    </div>
+<div class="cart box" title="Cart">
+    <a href="{% url 'cart' %}">
+        <span><i class="fa-solid fa-cart-shopping fa-xl"></i></span>
+        <span id="cartCount" class="cart-count">0</span>
+    </a>
+</div>
+
+    <div class="compare box" title="Compare" onclick="toggleCompare()">
+        <span><i class="fa-solid fa-code-compare fa-xl"></i></span>
+    </div>
+    <div class="Accounts box" title="Profile" onclick="toggleAccount()">
+        <span><i class="fa-solid fa-user fa-xl"></i></span>
+    </div>
+</div>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="message {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% block content %}{% endblock %}
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="message {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<!-- ShopBot Chat Widget -->
+<!-- ShopBot Widget -->
+<!-- ShopBot Floating Chat -->
+<div id="shopbot">
+    <div id="shopbot-header">ShopBot 🤖</div>
+    <div id="shopbot-body" style="display:none;">
+        <div id="shopbot-messages" class="messages"></div>
+        <div class="chat-input">
+            <input id="shopbot-input" type="text" placeholder="Ask me about a product...">
+            <button id="shopbot-send-btn">Send</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Footer Section -->
+{% include 'partials/footer.html' %}
+
+<!-- Sidebars -->
+{% include 'partials/sidebar.html' %}
+
+<script src="{% static 'js/full-app.js' %}"></script>
+<script src="{% static 'js/shopbot.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

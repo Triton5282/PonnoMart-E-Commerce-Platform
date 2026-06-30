@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Browse Products - PonnoMart{% endblock %}
+
+{% block content %}
+<div class="browse-main">
+    <!-- ===== FILTER SIDEBAR ===== -->
+    <aside class="filter-sidebar">
+        <h3>Filters</h3>
+
+        <!-- Category Filter -->
+        <div class="filter-section">
+            <h4>Category</h4>
+            <ul>
+                <li><input type="checkbox" name="category" value="Skin" {% if request.GET.category == "Skin" %}checked{% endif %}> Skin</li>
+                <li><input type="checkbox" name="category" value="Women's Fashion" {% if request.GET.category == "Women's Fashion" %}checked{% endif %}> Women's Fashion</li>
+                <li><input type="checkbox" name="category" value="Men's Fashion" {% if request.GET.category == "Men's Fashion" %}checked{% endif %}> Men's Fashion</li>
+                <li><input type="checkbox" name="category" value="Grocery" {% if request.GET.category == "Grocery" %}checked{% endif %}> Grocery</li>
+            </ul>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="filter-section">
+            <h4>Price Range</h4>
+            <input type="range" name="price" min="0" max="1000000" step="10" value="{{ request.GET.price|default:1000 }}">
+            <p>Max Price: $<span id="priceValue">{{ request.GET.price|default:100000 }}</span></p>
+        </div>
+
+        <button type="submit" onclick="applyFilters()">Apply Filters</button>
+    </aside>
+
+    <!-- ===== PRODUCTS GRID ===== -->
+    <section class="browse-products">
+        <h2>All Products</h2>
+        <div class="ProductsGrid">
+            {% for product in products %}
+            <div class="ProductCard">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" alt="{{ product.product_Name }}">
+                <h4>{{ product.product_Name }}</h4>
+                <p>${{ product.Price_BDT|floatformat:2 }}</p>
+                <button class="btn-orange add-cart" data-product="{{ product.product_Name }}" data-price="{{ product.Price_BDT }}">🛒 Add to Cart</button>
+                <button class="btn-orange add-compare" data-product="{{ product.product_Name }}">⚖️ Compare</button>
+            </div>
+            {% empty %}
+            <p>No products available</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% include 'partials/sidebar.html' %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

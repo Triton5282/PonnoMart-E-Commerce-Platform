@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - PonnoMart{% endblock %}
+
+{% block content %}
+<!-- Hero / Offer Section -->
+<div class="Herosection">
+    <div class="offer_tab"><a href="#"><img src="{% static 'images/offer1.jpg' %}" alt="Offer 1"></a></div>
+    <div class="offer_tab"><a href="#"><img src="{% static 'images/offer2.jpg' %}" alt="Offer 2"></a></div>
+    <div class="offer_tab"><a href="#"><img src="{% static 'images/offer3.jpg' %}" alt="Offer 3"></a></div>
+    <div class="offer_tab"><a href="#"><img src="{% static 'images/offer4.jpg' %}" alt="Offer 4"></a></div>
+</div>
+
+<!-- Popular Categories -->
+<div class="categories">
+    <h2>Popular Categories</h2>
+    <div class="carousel-container">
+        <div class="arrow left" onclick="scrollCarousel(-1)">&#10094;</div>
+        <div class="carousel" id="carousel">
+            <div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Skin" 
+               {% if request.GET.category == "Skin" %}checked{% endif %} hidden>
+        <img src="skin1.jpg" alt="Skin">
+        <p>Skin</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Women's Fashion" 
+               {% if request.GET.category == "Women's Fashion" %}checked{% endif %} hidden>
+        <img src="womenFashion.jpg" alt="Women's Fashion">
+        <p>Women's Fashion</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Men's Fashion" 
+               {% if request.GET.category == "Men's Fashion" %}checked{% endif %} hidden>
+        <img src="men fashion.jpg" alt="Men's Fashion">
+        <p>Men's Fashion</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Grocery" 
+               {% if request.GET.category == "Grocery" %}checked{% endif %} hidden>
+        <img src="icons/mouse.png" alt="Grocery">
+        <p>Grocery</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Stationary" 
+               {% if request.GET.category == "Stationary" %}checked{% endif %} hidden>
+        <img src="icons/gpu.png" alt="Stationary">
+        <p>Stationary</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Home Decor" 
+               {% if request.GET.category == "Home Decor" %}checked{% endif %} hidden>
+        <img src="icons/laptop.png" alt="Home Decor">
+        <p>Home Decor</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Home Appliances" 
+               {% if request.GET.category == "Home Appliances" %}checked{% endif %} hidden>
+        <img src="icons/keyboard.png" alt="Home Appliances">
+        <p>Home Appliances</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Electronics" 
+               {% if request.GET.category == "Electronics" %}checked{% endif %} hidden>
+        <img src="icons/monitor.png" alt="Electronics">
+        <p>Electronics</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="SmartPhones" 
+               {% if request.GET.category == "SmartPhones" %}checked{% endif %} hidden>
+        <img src="icons/motherboard.png" alt="SmartPhones">
+        <p>SmartPhones</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Laptop" 
+               {% if request.GET.category == "Laptop" %}checked{% endif %} hidden>
+        <img src="icons/mousepad.png" alt="Laptop">
+        <p>Laptop</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Desktop" 
+               {% if request.GET.category == "Desktop" %}checked{% endif %} hidden>
+        <img src="icons/ram.png" alt="Desktop">
+        <p>Desktop</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Computer Accessories" 
+               {% if request.GET.category == "Computer Accessories" %}checked{% endif %} hidden>
+        <img src="icons/router.png" alt="Computer Accessories">
+        <p>Computer Accessories</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Watches" 
+               {% if request.GET.category == "Watches" %}checked{% endif %} hidden>
+        <img src="icons/psu.png" alt="Watches">
+        <p>Watches</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Bags" 
+               {% if request.GET.category == "Bags" %}checked{% endif %} hidden>
+        <img src="icons/ram.png" alt="Bags">
+        <p>Bags</p>
+    </label>
+</div>
+
+<div class="category-card">
+    <label>
+        <input type="checkbox" name="category" value="Shoes" 
+               {% if request.GET.category == "Shoes" %}checked{% endif %} hidden>
+        <img src="icons/router.png" alt="Shoes">
+        <p>Shoes</p>
+    </label>
+</div>
+
+        <div class="arrow right" onclick="scrollCarousel(1)">&#10095;</div>
+    </div>
+</div>
+
+<!-- Best Selling Products -->
+<section class="BestSellingSection">
+    <h2>Best Selling Products</h2>
+    <div class="ProductsGrid">
+        {% for product in products %}
+        <div class="ProductCard">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" alt="{{ product.product_Name }}">
+            <h4>{{ product.product_Name }}</h4>
+            <p>${{ product.Price_BDT|floatformat:2 }}</p>
+            <button class="btn-orange add-cart" data-product="{{ product.product_Name }}" data-price="{{ product.Price_BDT }}" data-img="{% if product.image %}{{ product.image.url }}{% endif %}">🛒 Add to Cart</button>
+            <button class="btn-orange add-compare" data-product="{{ product.product_Name }}" data-price="{{ product.Price_BDT }}" data-img="{% if product.image %}{{ product.image.url }}{% endif %}">⚖️ Compare</button>
+        </div>
+        {% empty %}
+        <p>No products available</p>
+        {% endfor %}
+    </div>
+    <div class="browse-btn-container">
+        <a href="{% url 'browse' %}" class="btn-orange browse-btn">Browse More Products ➡️</a>
+    </div>
+</section>
+
+<!-- Include Sidebars -->
+{% include 'partials/sidebar.html' %}
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

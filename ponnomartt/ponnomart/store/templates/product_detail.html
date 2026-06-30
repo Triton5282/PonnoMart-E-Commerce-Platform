@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.product_Name }} - PonnoMart{% endblock %}
+
+{% block content %}
+<div class="product-detail-page">
+    <div class="product-image">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.product_Name }}">
+        {% else %}
+            <img src="{% static 'images/default-product.jpg' %}" alt="{{ product.product_Name }}">
+        {% endif %}
+    </div>
+
+    <div class="product-info">
+        <h2>{{ product.product_Name }}</h2>
+        <p class="price">BDT {{ product.Price_BDT }}</p>
+        <p class="stock">Stock: {{ product.Stock_Status }}</p>
+        {% if product.Discount %}
+            <p class="discount">Discount: {{ product.Discount }}</p>
+        {% endif %}
+        <p class="description">{{ product.Description|default:"No description available." }}</p>
+
+        {% if category_specs %}
+            <h3>Specifications</h3>
+            <ul>
+                {% for name, value in category_specs.items %}
+                    <li><strong>{{ name }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

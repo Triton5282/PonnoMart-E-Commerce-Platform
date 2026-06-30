@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - PonnoMart{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<section class="checkout-page">
+    <div class="checkout-container">
+
+        <!-- Left: Shipping & Payment Form -->
+        <div class="checkout-form">
+            <h2>Shipping Information</h2>
+            <form id="checkoutForm" method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Shipping Address</label>
+                    <input type="text" id="address" name="address" placeholder="Street, City, Postal Code" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment">Payment Method</label>
+                    <select id="payment" name="payment" required>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit">Place Order</button>
+            </form>
+        </div>
+
+        <!-- Right: Order Summary -->
+        <div class="checkout-summary">
+            <h2>Your Order</h2>
+            <div class="order-items" id="orderItemsContainer">
+                <!-- Cart items rendered by JS -->
+            </div>
+            <div class="order-total">
+                <p>Subtotal: $<span id="subtotal">0.00</span></p>
+                <p>Shipping: $<span id="shipping">5.00</span></p>
+                <p><strong>Total: $<span id="total">0.00</span></strong></p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    const container = document.getElementById("orderItemsContainer");
+    const subtotalEl = document.getElementById("subtotal");
+    const shippingEl = document.getElementById("shipping");
+    const totalEl = document.getElementById("total");
+
+    function renderCart() {
+        let subtotal = 0;
+
+        container.innerHTML = cartItems.map(item => {
+            subtotal += item.price * (item.quantity || 1);
+            return `
+                <div class="order-item">
+                    <img src="${item.img || '/static/images/default-product.jpg'}" alt="${item.name}">
+                    <div class="order-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Price: $${item.price.toFixed(2)}</p>
+                        <p>Qty: ${item.quantity || 1}</p>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        subtotalEl.textContent = subtotal.toFixed(2);
+        totalEl.textContent = (subtotal + parseFloat(shippingEl.textContent)).toFixed(2);
+    }
+
+    renderCart();
+});
+</script>
+{% endblock %}

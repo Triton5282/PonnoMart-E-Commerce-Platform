@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - PonnoMart{% endblock %}
+
+{% block content %}
+<section class="cart-page">
+    <h2>Your Cart</h2>
+    <div class="cart-items" id="cartItemsContainer">
+        <!-- Cart items will be rendered here by JavaScript -->
+    </div>
+    <div class="cart-summary">
+        <p>Total: $<span id="cartTotal">0</span></p>
+        <a href="{% url 'checkout' %}" class="btn-orange">Proceed to Checkout</a>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    const container = document.getElementById("cartItemsContainer");
+    const totalEl = document.getElementById("cartTotal");
+
+    function renderCart() {
+        let total = 0;
+        container.innerHTML = cartItems.map(item => {
+            let qty = item.quantity || 1;
+            total += item.price * qty;
+            return `
+                <div class="cart-item">
+                    <img src="${item.img || '/static/images/default-product.jpg'}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Price: $${item.price}</p>
+                        <p>Quantity: <input type="number" min="1" value="${qty}" onchange="updateQuantity('${item.id}', this.value)"></p>
+                        <p>Subtotal: $${(item.price * qty).toFixed(2)}</p>
+                        <button onclick="removeItem('${item.id}')">Remove</button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+        totalEl.textContent = total.toFixed(2);
+    }
+
+    window.removeItem = function(id) {
+        cartItems = cartItems.filter(i => i.id !== id);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        renderCart();
+    }
+
+    window.updateQuantity = function(id, qty) {
+        cartItems = cartItems.map(i => i.id === id ? {...i, quantity: parseInt(qty)} : i);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        renderCart();
+    }
+
+    renderCart();
+});
+</script>
+{% endblock %}
